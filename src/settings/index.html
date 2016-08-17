@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en" ng-app="StarterApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo App - Settings</title>
+    <script src="https://static.parastorage.com/services/js-sdk/1.64.0/js/wix.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react-with-addons.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+    <script src="/vendors/editor-ui-lib-angular.js"></script>
+    <link rel="stylesheet" href="css/settings.css">
+
+</head>
+<body ng-controller="AppCtrl as settings">
+    <div class="tabs" ng-init="settings.selectedPanel=(settings.selectedPanel || 'Main')" style="height:100%;">
+        <wix-control name="UI.appSettings"></wix-control>
+
+        <div class="tabs-menu">
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Main'" ng-class="{'active': settings.selectedPanel=='Main'}"> Main </div></div>
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Settings'" ng-class="{'active': settings.selectedPanel=='Settings'}"> Settings </div></div>
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Layout'" ng-class="{'active': settings.selectedPanel=='Layout'}"> Layout </div></div>
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Design'" ng-class="{'active': settings.selectedPanel=='Design'}"> Design </div></div>
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Animations'" ng-class="{'active': settings.selectedPanel=='Animations'}"> Animations </div></div>
+            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Support'" ng-class="{'active': settings.selectedPanel=='Support'}"> Support </div></div>
+            <hr class="divider-short">
+            <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav'}"></wix-control>
+        </div>
+        <div class="active-tab-content-pos settings-panel">
+            <div class="panel-info main-tab" ng-if="settings.selectedPanel=='Main'">
+                <img class="app-logo" src="svg/logo.svg" alt="app logo"/>
+                <p class="app-description">
+                    This is the Wix App settings demo.<br>
+                    Please add a short description of your App + CTA for the main action.
+                </p>
+                <wix-control name="UI.button" props="{label: 'Main CTA', className: 'main-cta-btn'}"></wix-control>
+            </div>
+            <div class="panel-info" ng-if="settings.selectedPanel=='Settings'">
+
+                <wix-control name="UI.dropDownSelect" class="settings_onImageClick" props="{
+                                title: 'When image is clicked',
+                                defaultValue:'1',
+                               options:[
+                                 {value: '1', label: 'Enter expand mode'},
+                                 {value: '2', label: 'Show on full screen'},
+                                 {value: '3', label: 'Do nothing'}
+                               ]
+                            }"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Enable functionality'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow editing', defaultValue: true}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow deleting', defaultValue: true}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Display info'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control class="settings_displayName" name="UI.checkbox" props="{label:'Name', defaultValue: false}"></wix-control>
+
+                <wix-control class="settings_displayTitle" name="UI.checkbox" props="{label:'Title', defaultValue: true}"></wix-control>
+
+                <wix-control class="settings_displayDescription" name="UI.checkbox" props="{label:'Description', defaultValue: true}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control class="settings_taxOnImage" name="UI.radioButtons" props="{
+                    title: 'Do images show text?',
+                    defaultValue: '0',
+                    onChange: alignmentRadios.onChange,
+                    options:[{value: '0', label: 'A title and a description'},
+                           {value: '1', label: 'Just a title'},
+                           {value: '2', label: 'Just a description'}]
+                    }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.textInput" props="{
+                      title: 'Text field',
+                      defaultText:'Title'}">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.textInput" props="{
+                        title: 'Text area',
+                        focus: true,
+                        defaultText: 'Paragraph',
+                        isMultiLine:true}">
+                </wix-control>
+
+            </div>
+            <div class="panel-info" ng-if="settings.selectedPanel=='Layout'">
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'How does this gallery look?'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.slider" props="{
+                      title: 'Columns',
+                        min: 1,
+                        max: 36,
+                        defaultValue: 7
+                     }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.slider" props="{
+                        title: 'Spacing (px)',
+                        min: 0,
+                        max: 50,
+                        defaultValue: 10,
+                        units: 'px'
+                     }">
+                </wix-control>
+            </div>
+            <div class="panel-info" ng-if="settings.selectedPanel=='Design'">
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Text & Background'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.fontAndColorPicker" props="{
+                    title: 'Fonts',
+                    startWithFont: 'font_3',
+                    startWithColor: 'color-1',
+                    'wix-param-font': 'titleFont',
+                    'wix-param-color':'titleColor',
+                    infoTitle: 'some info title',
+                    infoText: 'some information text should be here'
+                    }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.colorPickerSlider" props="{
+                    title: 'Background',
+                    'wix-param': 'design_backgroundColor',
+                    startWithColor: 'color-5',
+                    startWithOpacity: 0.5
+                }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Buttons'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.fontAndColorPicker" props="{
+                    title: 'Button Text',
+                    'wix-param-font': 'btnFont',
+                    'wix-param-color':'btnColor',
+                    infoTitle: 'some info title',
+                    infoText: 'some information text should be here'
+                    }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.colorPickerSlider" props="{
+                    title: 'Button Background',
+                    'wix-param': 'design_buttonBackground',
+                    startWithColor: 'color-3',
+                    startWithOpacity: 0.7
+                }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Search fields'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.colorPickerInput" props="{
+                    title: 'Field Text',
+                    'wix-param': 'design_inputColor',
+                    startWithColor: 'color-3'
+                    }">
+                </wix-control>
+            </div>
+            <div class="panel-info" ng-if="settings.selectedPanel=='Animations'">
+                <wix-control name="UI.dropDownSelect" class="animations_type" props="{
+                        title: 'Animation',
+                        defaultValue:'1',
+                       options:[
+                         {value: '1', label: 'Slide'},
+                         {value: '2', label: 'Fade'},
+                         {value: '3', label: 'Something else'}
+                       ]
+                    }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Animation settings', infoText: 'info text', infoTitle: 'info title'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control class="animations_button" name="UI.button" props="{label: 'Play Animation', className: 'btn-confirm-secondary', icon: 'playAnimation'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.dropDownSelect" class="animations_direction" props="{
+                        title: 'Direction',
+                        defaultValue:'2',
+                       options:[
+                         {value: '0', label: 'From Top'},
+                         {value: '1', label: 'From Right'},
+                         {value: '2', label: 'From Bottom'},
+                         {value: '3', label: 'From Left'}
+                       ]
+                    }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.slider" props="{
+                        title: 'Delay (secs)',
+                        min: 0,
+                        max: 2,
+                        step: 0.1,
+                        defaultValue: 0.6,
+                        units: 'sec'
+                     }">
+                </wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.toggleSwitch" props="{label: 'Opposite effect', defaultValue: true}"></wix-control>
+            </div>
+            <div class="panel-info support-tab" ng-if="settings.selectedPanel=='Support'">
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Developer info'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <ul class="developer-info">
+                    <li>
+                        <wix-control name="UI.symbol" props="{name: 'help'}"></wix-control>
+                        App FAQ
+                    </li>
+                    <li>
+                        <wix-control name="UI.symbol" props="{name: 'email'}"></wix-control>
+                        support@wix.com
+                    </li>
+                    <li>
+                        <wix-control name="UI.symbol" props="{name: 'globus'}"></wix-control>
+                        Developer Website
+                    </li>
+                    <li>
+                        <wix-control name="UI.symbol" props="{name: 'phone'}"></wix-control>
+                        1 408 974 4897
+                    </li>
+                </ul>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Review the app'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <p class="review-paragraph">Have you enjoyed the app? Spread the word and rate us in the app market</p>
+
+                <div class="button-wrapper-center">
+                    <wix-control name="UI.button" class="support_rateUs" props="{label: 'Rate Us', className: 'rate-us-btn'}"></wix-control>
+                </div>
+
+                <hr class="divider-long">
+
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Send us a message'}"></wix-control>
+
+                <hr class="divider-long">
+
+                <wix-control class="support_email" name="UI.textInput" props="{
+                      title: 'What\'s your email? (optional)',
+                      placeholder: 'Email'}">
+                </wix-control>
+
+                <hr class="divider-short">
+
+                <wix-control class="support_message" name="UI.textInput" props="{
+                        title: 'What do you want to tell us?',
+                        placeholder: 'Write us your message (new feature idea / other issues)',
+                        isMultiLine: true}">
+                </wix-control>
+
+                <hr class="divider-short">
+
+                <div class="button-wrapper-center">
+                    <wix-control name="UI.button" class="support_sendButton" props="{label: 'Send'}"></wix-control>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="settings.js"></script>
+
+</body>
+</html>
