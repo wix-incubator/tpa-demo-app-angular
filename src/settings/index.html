@@ -3,31 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo App - Settings</title>
-    <script src="https://static.parastorage.com/services/js-sdk/1.64.0/js/wix.min.js"></script>
+    <link rel="stylesheet" href="css/settings.css">
+    <script src="https://static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react-with-addons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-with-addons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-    <script src="/vendors/editor-ui-lib-angular.js"></script>
-    <link rel="stylesheet" href="css/settings.css">
+    <script src="/vendors/editor-ui-lib-angular.min.js"></script>
+    <!--<script src="http://localhost:8080/editor-ui-lib-angular.js"></script>-->
+    <script src="settings.js"></script>
 
 </head>
 <body ng-controller="AppCtrl as settings">
-    <div class="tabs" ng-init="settings.selectedPanel=(settings.selectedPanel || 'Main')" style="height:100%;">
-        <wix-control name="UI.appSettings"></wix-control>
-
-        <div class="tabs-menu">
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Main'" ng-class="{'active': settings.selectedPanel=='Main'}"> Main </div></div>
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Settings'" ng-class="{'active': settings.selectedPanel=='Settings'}"> Settings </div></div>
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Layout'" ng-class="{'active': settings.selectedPanel=='Layout'}"> Layout </div></div>
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Design'" ng-class="{'active': settings.selectedPanel=='Design'}"> Design </div></div>
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Animations'" ng-class="{'active': settings.selectedPanel=='Animations'}"> Animations </div></div>
-            <div class="content-tooltip"><div class="tab-label" ng-click="settings.selectedPanel='Support'" ng-class="{'active': settings.selectedPanel=='Support'}"> Support </div></div>
-            <hr class="divider-short">
-            <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav'}"></wix-control>
-        </div>
-        <div class="active-tab-content-pos settings-panel">
-            <div class="panel-info main-tab" ng-if="settings.selectedPanel=='Main'">
+    <wix-control name="UI.appSettings">
+        <wix-control name="UI.panelTabs" props="{defaultTabIndex: 0}" style="height:100%;">
+            <div class="main-tab" tab="Main">
                 <img class="app-logo" src="svg/logo.svg" alt="app logo"/>
                 <p class="app-description">
                     This is the Wix App settings demo.<br>
@@ -35,7 +26,7 @@
                 </p>
                 <wix-control name="UI.button" props="{label: 'Main CTA', className: 'main-cta-btn'}"></wix-control>
             </div>
-            <div class="panel-info" ng-if="settings.selectedPanel=='Settings'">
+            <div class="settings-tab" tab="Settings">
 
                 <wix-control name="UI.dropDownSelect" class="settings_onImageClick" props="{
                                 title: 'When image is clicked',
@@ -100,7 +91,7 @@
                 </wix-control>
 
             </div>
-            <div class="panel-info" ng-if="settings.selectedPanel=='Layout'">
+            <div class="layout-tab" tab="Layout">
                 <hr class="divider-long">
 
                 <wix-control name="UI.sectionDividerLabeled" props="{label: 'How does this gallery look?'}"></wix-control>
@@ -126,7 +117,7 @@
                      }">
                 </wix-control>
             </div>
-            <div class="panel-info" ng-if="settings.selectedPanel=='Design'">
+            <div class="design-tab" tab="Design">
                 <hr class="divider-long">
 
                 <wix-control name="UI.sectionDividerLabeled" props="{label: 'Text & Background'}"></wix-control>
@@ -192,7 +183,7 @@
                     }">
                 </wix-control>
             </div>
-            <div class="panel-info" ng-if="settings.selectedPanel=='Animations'">
+            <div class="anymations-tab" tab="Animations">
                 <wix-control name="UI.dropDownSelect" class="animations_type" props="{
                         title: 'Animation',
                         defaultValue:'1',
@@ -242,7 +233,7 @@
 
                 <wix-control name="UI.toggleSwitch" props="{label: 'Opposite effect', defaultValue: true}"></wix-control>
             </div>
-            <div class="panel-info support-tab" ng-if="settings.selectedPanel=='Support'">
+            <div class="support-tab" tab="Support">
 
                 <hr class="divider-long">
 
@@ -306,11 +297,13 @@
                     <wix-control name="UI.button" class="support_sendButton" props="{label: 'Send'}"></wix-control>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-    <script src="settings.js"></script>
+            <hr class="divider-short">
+            <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav'}"></wix-control>
+
+        </wix-control>
+    </wix-control>
+
 
 </body>
 </html>
