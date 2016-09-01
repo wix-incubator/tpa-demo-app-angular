@@ -4,30 +4,36 @@
     <meta charset="UTF-8">
     <title>Demo App - Widget</title>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//static.parastorage.com/services/js-sdk/1.63.0/js/wix.min.js"></script>
-    <link rel="stylesheet" href="widget.css"/>
+    <script src="https://static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
     <script src="widget.js"></script>
+    <link rel="stylesheet" href="widget.css"/>
 
     <style wix-style>
         .wix-style-sample {
-            background: {{style.design_backgroundColor color-1}};
+        background: {{style._backgroundColor color-1}};
         }
 
         .sample-title {
-            {{style.design_titleFont}}
+        {{style._titleFont}}
+        color: {{style._titleColor color-5}};
         }
 
         .sample-content {
-            {{style.design_contentFont}}
+        {{style._descFont font_8}}
+        color: {{style._descColor color-4}};
         }
 
         .sample-button {
-            background: {{style.design_buttonBackground}};
-            {{style.design_buttonFont}}
+        background: {{style._btnBgColor color-8}};
+        color: {{style._btnTextColor color-1}};
+        {{style._btnFont font_8}}
         }
 
         .sample-input {
-            color: {{style.design_inputColor}};
+        background:{{style._inputFieldBackground color-1}};
+        color: {{style._inputColor color-3}};
+        {{style._inputFont font_8}}
+        border:1px solid black;
         }
     </style>
 </head>
@@ -35,20 +41,18 @@
 <div id="root">
     <div>
         <section>
-            <h2>Design demo</h2>
             <div class="wix-style-sample">
-                <h3 class="sample-element sample-title">Hello!</h3>
-                <p class="sample-element sample-content">Welcome to Demo App, let's play.</p>
-                <button class="sample-element sample-button">Click me!</button>
+                <h3 class="sample-element sample-title">Demo App</h3>
+                <p class="sample-element sample-content">Welcome to the Wix Demo App, let's play!</p>
                 <form class="form">
-                    <input title="email" type="email" class="sample-element sample-input" value="I'm an email text field!">
+                    <input title="email" type="email" class="sample-element sample-input" placeholder="Enter text here">
                 </form>
+                <button class="sample-element sample-button">Click me!</button>
+                <h3 class="sample-element sample-title">Last settings update</h3>
+                <pre>
+                     <code class="json sample-content"></code>
+                </pre>
             </div>
-        </section>
-
-        <section class="settings-update">
-            <h2>Last settings update</h2>
-            <pre><code class="json">{{settingsUpdate}}</code></pre>
         </section>
     </div>
 </div>
