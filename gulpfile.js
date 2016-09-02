@@ -8,5 +8,5 @@ require('./tasks/serve');
 gulp.task('default', ['serve', 'css', 'babel', 'copy'], function () {
     gulp.watch('src/css/*.scss', ['css']);
     gulp.watch('src/**/*.js', ['babel']);
-    gulp.watch('src/**/*.html', ['babel']);
+    gulp.watch('src/**/*.html', ['babel', 'copy']);
 });

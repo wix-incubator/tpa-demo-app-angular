@@ -12,12 +12,13 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
     <script src="/vendors/editor-ui-lib-angular.min.js"></script>
     <!--<script src="http://localhost:8080/editor-ui-lib-angular.js"></script>-->
+
     <script src="settings.js"></script>
 
 </head>
 <body ng-controller="AppCtrl as settings">
     <wix-control name="UI.appSettings">
-        <wix-control name="UI.panelTabs" props="{defaultTabIndex: settings.tabIndex}" style="height:100%;">
+        <wix-control name="UI.panelTabs" ref="panelTabs" props='{defaultTabIndex: settings.defaultTabIndex}' style="height:100%;">
             <div class="main-tab" tab="Main">
                 <img class="app-logo" src="svg/logo.svg" alt="app logo"/>
                 <p class="app-description">
