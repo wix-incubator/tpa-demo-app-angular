@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo App - Settings</title>
-    <link rel="stylesheet" href="css/settings.css">
     <script src="https://static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-with-addons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-    <script src="/vendors/editor-ui-lib-angular.min.js"></script>
-    <!--<script src="http://localhost:8080/editor-ui-lib-angular.js"></script>-->
-
-    <script src="settings.js"></script>
+    <script src="http://static.parastorage.com/services/editor-ui-lib/1.7.0/lib/editor-ui-lib-angular.min.js"></script>
+    <script src="dist/settings.js"></script>
 
 </head>
 <body ng-controller="AppCtrl as settings">
     <wix-control name="UI.appSettings">
         <wix-control name="UI.panelTabs" ref="panelTabs" props='{defaultTabIndex: settings.defaultTabIndex}' style="height:100%;">
             <div class="main-tab" tab="Main">
-                <img class="app-logo" src="svg/logo.svg" alt="app logo"/>
+                <img class="app-logo" src="src/settings/svg/logo.svg" alt="app logo"/>
                 <p class="app-description">
                     This is the Wix App settings demo.<br>
                     Please add a short description of your App + CTA for the main action.

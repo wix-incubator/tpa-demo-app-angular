@@ -5,8 +5,7 @@
     <title>Demo App - Widget</title>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
-    <script src="widget.js"></script>
-    <link rel="stylesheet" href="widget.css"/>
+    <script src="dist/widget.js"></script>
 
     <style wix-style>
         .wix-style-sample {
@@ -40,7 +39,6 @@
 <body>
 <div id="root">
     <div>
-        <section>
             <div class="wix-style-sample">
                 <h3 class="sample-element sample-title">Demo App</h3>
                 <p class="sample-element sample-content">Welcome to the Wix Demo App, let's play!</p>
@@ -49,10 +47,9 @@
                 </form>
                 <button class="sample-element sample-button">Click me!</button>
                 <h3 class="sample-element sample-title">Last settings update</h3>
-                <pre>
-                     <code class="json sample-content"></code>
-                </pre>
             </div>
+        <section class="settings-update">
+            <pre><code class="json"></code></pre>
         </section>
     </div>
 </div>
