@@ -1,26 +1,25 @@
-<!doctype html>
-<html lang="en" ng-app="StarterApp">
+<html ng-app="settings">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Demo App - Settings</title>
-    <script src="https://static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-with-addons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-with-addons.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-    <script src="//static.parastorage.com/services/editor-ui-lib/1.14.0/lib/editor-ui-lib-angular.min.js"></script>
-    <script src="dist/settings.js"></script>
+    <script src="//static.parastorage.com/services/js-sdk/1.66.0/js/wix.min.js"></script>
+    <script src="//static.parastorage.com/services/editor-ui-lib/1.20.0/lib/editor-ui-lib-angular.min.js"></script>
+    <script src="src/settings/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/settings/css/settings.css">
 
 </head>
-<body ng-controller="AppCtrl as settings">
+
+<body ng-controller="controller as settings">
     <wix-control name="UI.appSettings">
         <wix-control name="UI.panelTabs" ref="panelTabs" props='{defaultTabIndex: settings.defaultTabIndex}' style="height:100%;">
             <div class="main-tab" tab="Main">
-                <img class="app-logo" src="src/settings/svg/logo.svg" alt="app logo"/>
+                <img class="app-logo" src="src/settings/svg/logo.svg" alt="app logo" />
                 <p class="app-description">
-                    This is the Wix App settings demo.<br>
-                    Please add a short description of your App + CTA for the main action.
+                    This is the Wix App settings demo.<br> Please add a short description of your App + CTA for the main action.
                 </p>
                 <wix-control name="UI.button" props="{label: 'Main CTA', className: 'btn-confirm-primary', onClick: settings.onButtonClicked}"></wix-control>
             </div>
@@ -29,11 +28,12 @@
                 <wix-control name="UI.dropDownSelect" class="settings_onImageClick" props="{
                                 title: 'When image is clicked',
                                 defaultValue:'1',
-                               options:[
+                                options:[
                                  {value: '1', label: 'Enter expand mode'},
                                  {value: '2', label: 'Show on full screen'},
                                  {value: '3', label: 'Do nothing'}
-                               ]
+                               ],
+                               onChange:settings.onUpdate('onImageClick')
                             }"></wix-control>
 
                 <hr class="divider-long">
@@ -42,11 +42,11 @@
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.toggleSwitch" props="{label: 'Allow editing', defaultValue: true}"></wix-control>
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow editing', defaultValue: true, onChange:settings.onUpdate('Allow editing') }"></wix-control>
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.toggleSwitch" props="{label: 'Allow deleting', defaultValue: true}"></wix-control>
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow deleting', defaultValue: true, onChange:settings.onUpdate('Allow deleting')}"></wix-control>
 
                 <hr class="divider-long">
 
@@ -54,11 +54,11 @@
 
                 <hr class="divider-long">
 
-                <wix-control class="settings_displayName" name="UI.checkbox" props="{label:'Name', defaultValue: false}"></wix-control>
+                <wix-control class="settings_displayName" name="UI.checkbox" props="{label:'Name', defaultValue: false, onChange:settings.onUpdate('Show displayName')}"></wix-control>
 
-                <wix-control class="settings_displayTitle" name="UI.checkbox" props="{label:'Title', defaultValue: true}"></wix-control>
+                <wix-control class="settings_displayTitle" name="UI.checkbox" props="{label:'Title', defaultValue: true, onChange:settings.onUpdate('Show displayTitle')}"></wix-control>
 
-                <wix-control class="settings_displayDescription" name="UI.checkbox" props="{label:'Description', defaultValue: true}"></wix-control>
+                <wix-control class="settings_displayDescription" name="UI.checkbox" props="{label:'Description', defaultValue: true, onChange:settings.onUpdate('Show displayDescription')}"></wix-control>
 
                 <hr class="divider-long">
 
@@ -76,31 +76,43 @@
 
                 <wix-control name="UI.textInput" props="{
                       title: 'Text field',
-                      defaultText:'Title'}">
+                      defaultText:'asd',
+                      onChange:settings.onUpdate('textInput')}">
                 </wix-control>
-
                 <hr class="divider-long">
 
-                <wix-control name="UI.textInput" props="{
+                <wix-control name="UI.textInput" ng-model="b" props="{
                         title: 'Text area',
                         focus: true,
                         defaultText: 'Paragraph',
-                        isMultiLine:true}">
+                        isMultiLine:true,
+                        onChange:settings.onUpdate('Text Area')}">
                 </wix-control>
 
             </div>
             <div class="layout-tab" tab="Layout">
                 <hr class="divider-long">
-
                 <wix-control name="UI.sectionDividerLabeled" props="{label: 'How does this gallery look?'}"></wix-control>
 
                 <hr class="divider-long">
+                <wix-control name="UI.thumbnails" props="{
+                  activeDesign:'vmark',
+                  maxThumbsPerRow:'3',
+                  onChange:settings.onUpdate('Thumbnails'),
+                  square:true,
+                  options:[
+                  {value: '1', src: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICAgIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiAgICAgdmlld0JveD0iMCAwIDUgMTAiIHdpZHRoPSI1IiBoZWlnaHQ9IjEwIj4gICAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNLTAgMTBDLTAgMTAtMC0wLTAtMC0wLTAgNSA1IDUgNSA1IDUtMCAxMC0wIDEwWiIvPjwvc3ZnPg=='},{value: '3', src: 'http://65.media.tumblr.com/08b116f807860cbd28c79919ff60fcd9/tumblr_mrj5reJ8BE1rckdh5o2_500.jpg'},{value: '2', src: 'https://s-media-cache-ak0.pinimg.com/564x/d1/76/42/d17642af1ab2315b9c78321dfa8967c8.jpg'}
+                  ]}"></wix-control>
+
+                  <hr class="divider-long">
+
 
                 <wix-control name="UI.slider" props="{
                       title: 'Columns',
                         min: 1,
                         max: 36,
-                        defaultValue: 7
+                        defaultValue: 7,
+                        onChange:settings.onUpdate('Columns')
                      }">
                 </wix-control>
 
@@ -111,7 +123,8 @@
                         min: 0,
                         max: 50,
                         defaultValue: 10,
-                        units: 'px'
+                        units: 'px',
+                        onChange:settings.onUpdate('Spacing')
                      }">
                 </wix-control>
             </div>
@@ -129,7 +142,8 @@
                     'wix-param-font': '_titleFont',
                     'wix-param-color':'_titleColor',
                     infoTitle: 'some info title',
-                    infoText: 'some information text should be here'
+                    infoText: 'some information text should be here',
+                    onChange:settings.onUpdate('_titleFont&color')
                     }">
                 </wix-control>
 
@@ -142,7 +156,8 @@
                     'wix-param-font': '_descFont',
                     'wix-param-color':'_descColor',
                     infoTitle: 'some info title',
-                    infoText: 'some information text should be here'
+                    infoText: 'some information text should be here',
+                    onChange:settings.onUpdate('_descFont&color')
                     }">
                 </wix-control>
 
@@ -151,7 +166,7 @@
                 <wix-control name="UI.colorPickerSlider" props="{
                     title: 'Background color',
                     'wix-param': '_backgroundColor',
-                    startWithColor: 'color-1',
+                    startWithColor: 'color-2',
                     startWithOpacity: 1,
                     onChange: settings.onUpdate('_backgroundColor')
                 }">
@@ -170,7 +185,8 @@
                     startWithTheme: 'font_8',
                     startWithColor: 'color-3',
                     infoTitle: 'some info title',
-                    infoText: 'some information text should be here'
+                    infoText: 'some information text should be here',
+                    onChange:settings.onUpdate('_inputFont&color')
                     }">
                 </wix-control>
 
@@ -198,7 +214,8 @@
                     startWithTheme: 'font_8',
                     startWithColor: 'color-1',
                     infoTitle: 'some info title',
-                    infoText: 'some information text should be here'
+                    infoText: 'some information text should be here',
+                    onChange:settings.onUpdate('_btnFont&color')
                     }">
                 </wix-control>
 
@@ -220,7 +237,8 @@
                          {value: '1', label: 'Slide'},
                          {value: '2', label: 'Fade'},
                          {value: '3', label: 'Something else'}
-                       ]
+                       ],
+                       onChange:settings.onUpdate('Animation')
                     }">
                 </wix-control>
 
@@ -242,7 +260,8 @@
                          {value: '1', label: 'From Right'},
                          {value: '2', label: 'From Bottom'},
                          {value: '3', label: 'From Left'}
-                       ]
+                       ],
+                       onChange:settings.onUpdate('Direction')
                     }">
                 </wix-control>
 
@@ -254,13 +273,15 @@
                         max: 2,
                         step: 0.1,
                         defaultValue: 0.6,
-                        units: 'sec'
+                        units: 'sec',
+                        onChange:settings.onUpdate('Delay')
                      }">
                 </wix-control>
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.toggleSwitch" props="{label: 'Opposite effect', defaultValue: true}"></wix-control>
+                <wix-control name="UI.toggleSwitch" props="{label: 'Opposite effect', defaultValue: true ,
+                onChange:settings.onUpdate('Opposite effect')}"></wix-control>
             </div>
             <div class="support-tab" tab="Support">
 
@@ -331,4 +352,5 @@
 
 
 </body>
+
 </html>
