@@ -1,15 +1,11 @@
 {
-  "name": "new",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "name": "tpa-demo-app-angular",
+  "version": "0.0.1",
   "dependencies": {
     "express": "^4.14.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node server.js"
   },
-  "author": "",
   "license": "ISC"
 }
