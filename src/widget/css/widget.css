@@ -1,0 +1,33 @@
+.wix-style-sample {
+  padding: 15px;
+  border: 1px solid #aaa;
+}
+.wix-style-sample h3, .wix-style-sample p {
+  margin: 0;
+  padding: 0;
+}
+.wix-style-sample .sample-element {
+  margin: 5px 0;
+}
+.wix-style-sample .sample-button {
+  padding: 10px 15px;
+  border: 0;
+  width: 100%;
+}
+.wix-style-sample .sample-input {
+  padding: 10px 15px;
+  border: 1px solid black;
+  width: 100%;
+  box-sizing: border-box;
+}
+.wix-style-sample .form {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.wix-style-sample .settings-update pre {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 4px;
+}
