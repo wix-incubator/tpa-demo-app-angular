@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo App - Settings</title>
-  <script src="//static.parastorage.com/services/js-sdk/1.77.0/js/wix.min.js"></script>
+  <script src="//static.parastorage.com/services/js-sdk/1.83.0/js/wix.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-with-addons.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-dom.min.js"></script>
@@ -12,27 +12,39 @@
   <script src="//static.parastorage.com/services/editor-ui-lib/1.26.0/lib/editor-ui-lib-angular.min.js"></script>
   <script src="dist/settings.js"></script>
 </head>
-<body ng-controller="AppCtrl as settings">
+<body ng-controller="AppCtrl">
     <wix-control name="UI.appSettings">
-        <wix-control name="UI.panelTabs" ref="panelTabs" props='{defaultTabIndex: settings.defaultTabIndex}' style="height:100%;">
+        <wix-control name="UI.panelTabs" ref="panelTabs" props='{defaultTabIndex: defaultTabIndex}' style="height:100%;">
+
+            <!--Main Tab-->
+
             <div class="main-tab" tab="Main">
-                <img class="app-logo" src="src/settings/svg/logo.svg" alt="app logo"/>
-                <p class="app-description">
-                    This is the Wix App settings demo.<br>
-                    Please add a short description of your App + CTA for the main action.
+              <img class="app-logo" src="src/settings/svg/logo.svg" alt="app logo"/>
+              <p>
+                  This is the Wix App settings demo.
+                  <br/>
+                  Please add a short description of your App + CTA for the main action.
+              </p>
+              <wix-control name="UI.button" props="{label: 'Main CTA', className: 'btn-confirm-primary', onClick: onButtonClicked}"></wix-control>
+              <div class="main-bottom">
+                <hr class="divider-long"/>
+                <p>
+                  Upgrade now to get a lot more features and enjoy everything our app has to offer!
                 </p>
-                <wix-control name="UI.button" props="{label: 'Main CTA', className: 'btn-confirm-primary', onClick: settings.onButtonClicked}"></wix-control>
+                <wix-control name="UI.button" props="{label: 'Main CTA', className: 'btn-upgrade-banner', onClick: clickUpgrade}"></wix-control>
+              </div>
             </div>
+
+            <!--Settings Tab-->
+
             <div class="settings-tab" tab="Settings">
 
                 <wix-control name="UI.dropDownSelect" class="settings_onImageClick" props="{
                                 title: 'When image is clicked',
                                 defaultValue:'1',
-                               options:[
-                                 {value: '1', label: 'Enter expand mode'},
-                                 {value: '2', label: 'Show on full screen'},
-                                 {value: '3', label: 'Do nothing'}
-                               ]
+                                options: dropDownOptions,
+                                onChange: onUpdate('settings_onImageClick')
+
                             }"></wix-control>
 
                 <hr class="divider-long">
@@ -41,11 +53,11 @@
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.toggleSwitch" props="{label: 'Allow editing', defaultValue: true}"></wix-control>
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow editing', defaultValue: true, onChange: onUpdate('_allowEditing')}"></wix-control>
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.toggleSwitch" props="{label: 'Allow deleting', defaultValue: true}"></wix-control>
+                <wix-control name="UI.toggleSwitch" props="{label: 'Allow deleting', defaultValue: true, onChange: onUpdate('_allowDeleting')}"></wix-control>
 
                 <hr class="divider-long">
 
@@ -53,21 +65,20 @@
 
                 <hr class="divider-long">
 
-                <wix-control class="settings_displayName" name="UI.checkbox" props="{label:'Name', defaultValue: false}"></wix-control>
+                <wix-control class="settings_displayName" name="UI.checkbox" props="{label:'Name', defaultValue: false, onChange: onUpdate('_displayName')}"></wix-control>
 
-                <wix-control class="settings_displayTitle" name="UI.checkbox" props="{label:'Title', defaultValue: true}"></wix-control>
+                <wix-control class="settings_displayTitle" name="UI.checkbox" props="{label:'Title', defaultValue: true, onChange: onUpdate('_displayTitle')}"></wix-control>
 
-                <wix-control class="settings_displayDescription" name="UI.checkbox" props="{label:'Description', defaultValue: true}"></wix-control>
+                <wix-control class="settings_displayDescription" name="UI.checkbox" props="{label:'Description', defaultValue: true, onChange: onUpdate('_displayDescription')}"></wix-control>
 
                 <hr class="divider-long">
 
+                <!-- Example for dynamic content in radio buttons -->
                 <wix-control class="settings_taxOnImage" name="UI.radioButtons" props="{
                     title: 'Do images show text?',
                     defaultValue: '0',
-                    options:[{value: '0', label: 'A title and a description'},
-                           {value: '1', label: 'Just a title'},
-                           {value: '2', label: 'Just a description'}],
-                    onClickPreview: settings.onUpdate('Alignment')
+                    options: alignmentOptions,
+                    onClickPreview: onUpdate('Alignment')
                     }">
                 </wix-control>
 
@@ -114,6 +125,9 @@
                      }">
                 </wix-control>
             </div>
+
+            <!--Design Tab-->
+
             <div class="design-tab" tab="Design">
                 <hr class="divider-long">
 
@@ -127,7 +141,6 @@
                     startWithColor: 'color-5',
                     'wix-param-font': '_titleFont',
                     'wix-param-color':'_titleColor',
-                    infoTitle: 'some info title',
                     infoText: 'some information text should be here'
                     }">
                 </wix-control>
@@ -140,7 +153,6 @@
                     startWithColor: 'color-4',
                     'wix-param-font': '_descFont',
                     'wix-param-color':'_descColor',
-                    infoTitle: 'some info title',
                     infoText: 'some information text should be here'
                     }">
                 </wix-control>
@@ -152,7 +164,7 @@
                     'wix-param': '_backgroundColor',
                     startWithColor: 'color-1',
                     startWithOpacity: 1,
-                    onChange: settings.onUpdate('_backgroundColor')
+                    onChange: onUpdate('_backgroundColor')
                 }">
                 </wix-control>
 
@@ -168,7 +180,6 @@
                     'wix-param-color':'_inputColor',
                     startWithTheme: 'font_8',
                     startWithColor: 'color-3',
-                    infoTitle: 'some info title',
                     infoText: 'some information text should be here'
                     }">
                 </wix-control>
@@ -178,13 +189,31 @@
                 <wix-control name="UI.colorPickerSlider" props="{
                     title: 'Input field Background',
                     'wix-param': '_inputFieldBackground',
-                    startWithColor: 'color-1',
+                    startWithColor: 'color-4',
                     startWithOpacity: 1,
-                    onChange: settings.onUpdate('_inputFieldBackground')
+                    onChange: onUpdate('_inputFieldBackground')
                 }">
                 </wix-control>
 
                 <hr class="divider-long">
+
+                <wix-control name="UI.colorPickerSlider" props="{
+                    title: 'Border Color',
+                    'wix-param': '_borderColor',
+                    startWithColor: 'color-2',
+                    startWithOpacity: 1,
+                    onChange: onUpdate('_borderColor')
+                }">
+                </wix-control>
+
+                <wix-control name="UI.colorPickerSlider" props="{
+                    title: 'Divider Color',
+                    'wix-param': '_hrColor',
+                    startWithColor: 'color-2',
+                    startWithOpacity: 1,
+                    onChange: onUpdate('_hrColor')
+                }">
+                </wix-control>
 
                 <wix-control name="UI.sectionDividerLabeled" props="{label: 'Button'}"></wix-control>
 
@@ -196,7 +225,6 @@
                     'wix-param-color':'_btnTextColor',
                     startWithTheme: 'font_8',
                     startWithColor: 'color-1',
-                    infoTitle: 'some info title',
                     infoText: 'some information text should be here'
                     }">
                 </wix-control>
@@ -207,10 +235,13 @@
                     title: 'Field Text',
                     'wix-param': '_btnBgColor',
                     startWithColor: 'color-8',
-                    onChange: settings.onUpdate('_btnBgColor')
+                    onChange: onUpdate('_btnBgColor')
                     }">
                 </wix-control>
             </div>
+
+            <!--Animations Tab-->
+
             <div class="anymations-tab" tab="Animations">
                 <wix-control name="UI.dropDownSelect" class="animations_type" props="{
                         title: 'Animation',
@@ -225,7 +256,7 @@
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Animation settings', infoText: 'info text', infoTitle: 'info title'}"></wix-control>
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Animation settings', infoText: 'info text'}"></wix-control>
 
                 <hr class="divider-long">
 
@@ -261,6 +292,10 @@
 
                 <wix-control name="UI.toggleSwitch" props="{label: 'Opposite effect', defaultValue: true}"></wix-control>
             </div>
+            <hr class="divider-short">
+
+            <!--Support Tab-->
+
             <div class="support-tab" tab="Support">
 
                 <hr class="divider-long">
@@ -270,30 +305,36 @@
                 <hr class="divider-long">
 
                 <ul class="developer-info">
-                    <li>
-                        <wix-control name="UI.symbol" props="{name: 'email'}"></wix-control>
-                        support@wix.com
-                    </li>
-                    <li>
-                        <wix-control name="UI.symbol" props="{name: 'globe'}"></wix-control>
-                        Developer Website
-                    </li>
-                    <li>
-                        <wix-control name="UI.symbol" props="{name: 'phone'}"></wix-control>
-                        1 408 974 4897
+                  <li>
+                    <wix-control name="UI.symbol" props="{name: 'email'}"></wix-control>
+                    <a href="mailto:support@wix.com">
+                      support@wix.com
+                    </a>
+                  </li>
+                  <li>
+                    <wix-control name="UI.symbol" props="{name: 'globe'}"></wix-control>
+                     <a href="https://dev.wix.com/" target="_blank">
+                       Developer Website
+                     </a>
+                   </li>
+                  <li>
+                    <wix-control name="UI.symbol" props="{name: 'phone'}"></wix-control>
+                     <a href="tel:1-408-974-4897">
+                       1-408-974-4897
+                     </a>
                     </li>
                 </ul>
 
                 <hr class="divider-long">
 
-                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Review the app'}"></wix-control>
+                <wix-control name="UI.sectionDividerLabeled" props="{label: 'Review our app'}"></wix-control>
 
                 <hr class="divider-long">
 
-                <p class="review-paragraph">Have you enjoyed the app? Spread the word and rate us in the app market</p>
+                <p class="review-paragraph">Enjoying &lt;app name\>? Leave us a review in the App Market.</p>
 
                 <div class="button-wrapper-center">
-                    <wix-control name="UI.button" class="support_rateUs" props="{label: 'Rate Us', className: 'btn-confirm-primary'}"></wix-control>
+                    <wix-control name="UI.button" class="support_rateUs" props="{label: 'Rate Us', className: 'btn-confirm-primary', onClick: onRateUs}"></wix-control>
                 </div>
 
                 <hr class="divider-long">
@@ -303,7 +344,11 @@
                 <hr class="divider-long">
 
                 <wix-control class="support_email" name="UI.textInput" props="{
-                      title: 'What\'s your email? (optional)',
+                      title: 'What\'s your email?',
+                      validator: validateEmail,
+                      validateOnBlurOnly: true,
+                      onChange: emailChanged,
+                      invalidMessage: 'Invalid email address!',
                       placeholder: 'Email'}">
                 </wix-control>
 
@@ -311,18 +356,21 @@
 
                 <wix-control class="support_message" name="UI.textInput" props="{
                         title: 'What do you want to tell us?',
+                        validator: validateMessage,
+                        validateOnBlurOnly: true,
+                        onChange: msgChanged,
+                        invalidMessage: 'Message must be at least 5 characters long',
                         placeholder: 'Write us your message (new feature idea / other issues)',
                         isMultiLine: true}">
                 </wix-control>
 
                 <hr class="divider-short">
-
+                <!--Only allow button click after both email and message are valid-->
                 <div class="button-wrapper-center">
-                    <wix-control name="UI.button" class="support_sendButton" props="{label: 'Send'}"></wix-control>
+                    <wix-control name="UI.button" class="support_sendButton" props="{label: 'Send', disabled: !(msgIsValid && emailIsValid)}"></wix-control>
                 </div>
             </div>
 
-            <hr class="divider-short">
             <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav'}"></wix-control>
 
         </wix-control>
