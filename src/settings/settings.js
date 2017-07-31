@@ -35,7 +35,7 @@ app.controller('AppCtrl', ['$scope', function($scope) {
   }
 
   $scope.clickUpgrade = function () {
-    Wix.openBillingPage();
+    Wix.Settings.openBillingPage();
   }
 
   $scope.onButtonClicked = function () {

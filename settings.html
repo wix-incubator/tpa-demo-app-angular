@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo App - Settings</title>
-  <script src="//static.parastorage.com/services/js-sdk/1.83.0/js/wix.min.js"></script>
+  <script src="//static.parastorage.com/services/js-sdk/1.86.0/js/wix.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-with-addons.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-dom.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/jquery/3.1.1/dist/jquery.min.js"></script>
   <script src="//static.parastorage.com/services/third-party/lodash/4.17.2/lodash.js"></script>
-  <script src="//static.parastorage.com/services/editor-ui-lib/1.26.0/lib/editor-ui-lib-angular.min.js"></script>
+  <script src="//static.parastorage.com/services/editor-ui-lib/1.28.0/lib/editor-ui-lib-angular.min.js"></script>
   <script src="dist/settings.js"></script>
 </head>
 <body ng-controller="AppCtrl">
@@ -31,7 +31,7 @@
                 <p>
                   Upgrade now to get a lot more features and enjoy everything our app has to offer!
                 </p>
-                <wix-control name="UI.button" props="{label: 'Main CTA', className: 'btn-upgrade-banner', onClick: clickUpgrade}"></wix-control>
+                <wix-control name="UI.button" props="{label: 'Upgrade Now', className: 'btn-upgrade-banner', onClick: clickUpgrade}"></wix-control>
               </div>
             </div>
 
@@ -371,7 +371,7 @@
                 </div>
             </div>
 
-            <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav'}"></wix-control>
+            <wix-control name="UI.button" props="{label: 'Upgrade', className: 'btn-upgrade-nav', onClick: clickUpgrade}"></wix-control>
 
         </wix-control>
     </wix-control>
