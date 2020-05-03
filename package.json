@@ -5,7 +5,8 @@
     "jquery": "^3.0.0",
     "lodash": "^4.17.11",
     "mustache": "^2.2.1",
-    "react": "^0.13.0"
+    "react": "^0.13.0",
+    "snyk": "^1.316.2"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -17,5 +18,10 @@
     "style-loader": "0.13.1",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.15.1"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
